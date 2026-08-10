@@ -1,0 +1,95 @@
+# Global Travellers App - GitHub Pages Configuration
+
+# Site settings
+title: Global Travellers
+description: Live open transit data with real-time departures for 25+ major German central stations
+baseurl: /Global-Travillers-app
+url: https://tech-v6.github.io/Global-Travillers-app/
+
+# Author/Organization
+author:
+  name: Tech-v6
+  url: https://github.com/Tech-v6
+
+# SEO and Social Media
+logo: /images/logo.png
+social:
+  name: Global Travellers
+  links:
+    - https://github.com/Tech-v6/Global-Travillers-app
+    - https://twitter.com/yourtwitterhandle
+
+# Jekyll settings
+theme: jekyll-theme-slate
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-feed
+
+# Markdown
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false
+
+# Permalinks
+permalink: /:categories/:year/:month/:day/:title
+
+# Collections
+collections:
+  stations:
+    output: true
+    permalink: /stations/:name
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "default"
+  - scope:
+      path: ""
+      type: "stations"
+    values:
+      layout: "station"
+
+# Build settings
+sass:
+  style: compressed
+
+exclude:
+  - .github
+  - .gitignore
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - LICENSE
+  - .sass-cache/
+  - .jekyll-cache/
+  - gemfiles/
+  - node_modules/
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+
+include:
+  - .htaccess
+  - .nojekyll
+
+# Google Analytics
+google_analytics: UA-XXXXXXXXX-X  # Replace with your Google Analytics ID
+
+# Google Search Console
+google_site_verification: REPLACE_WITH_GOOGLE_VERIFICATION_TOKEN
+
+# Locale
+lang: de
+lang_alternate: en
+
+# Future posts
+future: false
+
+# Show drafts
+show_drafts: false
