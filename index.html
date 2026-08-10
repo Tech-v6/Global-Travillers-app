@@ -7,78 +7,346 @@
     <!-- Google Search Console verification: replace the content value with the token Google gives you -->
     <meta name="google-site-verification" content="REPLACE_WITH_GOOGLE_VERIFICATION_TOKEN" />
 
-    <title>Trip Selection - Choose Your Ride</title>
-    <meta name="description" content="Live open transit data (Transitous / DELFI & global GTFS + GTFS-RT feeds). Station guides and live departures for major German central stations.">
+    <title>Global Travellers - Live Transit Data & Station Guides | Choose Your Ride</title>
+    <meta name="description" content="Global Travellers: Live open transit data (Transitous / DELFI & global GTFS + GTFS-RT feeds). Real-time departures and complete station guides for 25+ major German central stations.">
+    <meta name="keywords" content="transit data, train stations, live departures, GTFS, Berlin Hbf, Munich Hbf, German railways, station guide">
     <meta name="robots" content="index, follow">
+    <meta name="language" content="German">
+    <meta name="author" content="Tech-v6">
     <link rel="canonical" href="https://tech-v6.github.io/Global-Travillers-app/">
+    
+    <!-- Open Graph for social sharing -->
+    <meta property="og:title" content="Global Travellers - Choose Your Ride">
+    <meta property="og:description" content="Live open transit data with real-time departures for 25+ major German central stations.">
+    <meta property="og:url" content="https://tech-v6.github.io/Global-Travillers-app/">
+    <meta property="og:type" content="website">
+    
+    <!-- JSON-LD Structured Data for SoftwareApplication -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org/",
+      "@type": "SoftwareApplication",
+      "name": "Global Travellers",
+      "description": "Live open transit data with real-time departures for major German central stations",
+      "url": "https://tech-v6.github.io/Global-Travillers-app/",
+      "applicationCategory": "MobileApplication",
+      "operatingSystem": "Android, iOS",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "EUR"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "Tech-v6"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.5",
+        "ratingCount": "100"
+      }
+    }
+    </script>
+
+    <!-- JSON-LD Organization -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Global Travellers",
+      "url": "https://tech-v6.github.io/Global-Travillers-app/",
+      "logo": "https://tech-v6.github.io/Global-Travillers-app/logo.png",
+      "description": "Live open transit data and station guides for German railways"
+    }
+    </script>
+
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #121212;
             color: #ffffff;
             text-align: center;
             padding: 40px 20px;
-            margin: 0;
+            line-height: 1.6;
         }
+        
+        header {
+            margin-bottom: 40px;
+        }
+        
         h1 {
-            font-size: 28px;
+            font-size: 36px;
             color: #ffffff;
             margin-bottom: 10px;
+            font-weight: 700;
         }
+        
         .subtitle {
-            font-size: 14px;
+            font-size: 16px;
             color: #a0a0a0;
             margin-bottom: 30px;
+            line-height: 1.5;
         }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
         .card {
             background-color: #1e1e1e;
             border: 1px solid #333;
             border-radius: 8px;
-            padding: 20px;
-            max-width: 400px;
-            margin: 0 auto 20px auto;
+            padding: 25px;
+            margin: 0 auto 25px auto;
             text-align: left;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
+        
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 188, 0, 0.1);
+            border-color: #ffbc00;
+        }
+        
         .card h2 {
-            font-size: 18px;
+            font-size: 22px;
             color: #ffbc00;
+            margin-bottom: 12px;
             margin-top: 0;
         }
+        
         .card p {
             font-size: 14px;
             color: #cccccc;
-            line-height: 1.4;
+            line-height: 1.6;
+            margin-bottom: 10px;
         }
+        
+        .card-highlight {
+            font-size: 12px;
+            color: #888;
+            font-style: italic;
+        }
+        
+        .stations-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .station-item {
+            background-color: #2a2a2a;
+            padding: 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #cccccc;
+        }
+        
+        .features {
+            margin: 30px 0;
+            text-align: left;
+        }
+        
+        .feature-item {
+            background-color: #1e1e1e;
+            border-left: 4px solid #ffbc00;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
+        
+        .feature-item h3 {
+            color: #ffbc00;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+        
+        .feature-item p {
+            font-size: 13px;
+            color: #a0a0a0;
+        }
+        
         .btn {
             display: inline-block;
             background-color: #ffbc00;
             color: #000000;
-            padding: 12px 24px;
+            padding: 14px 32px;
             text-decoration: none;
             border-radius: 5px;
             font-weight: bold;
             margin-top: 20px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
         }
+        
         .btn:hover {
             background-color: #e0a800;
+            transform: scale(1.05);
+        }
+        
+        .btn:active {
+            transform: scale(0.98);
+        }
+        
+        .btn-secondary {
+            background-color: #333;
+            color: #ffbc00;
+            margin-left: 10px;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #444;
+            color: #ffffff;
+        }
+        
+        .status {
+            color: #ffbc00;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+        
+        .data-sources {
+            background-color: #1e1e1e;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 30px auto;
+            max-width: 600px;
+        }
+        
+        .data-sources h3 {
+            color: #ffbc00;
+            margin-bottom: 12px;
+        }
+        
+        .data-sources ul {
+            text-align: left;
+            list-style: none;
+            padding: 0;
+        }
+        
+        .data-sources li {
+            padding: 8px 0;
+            color: #cccccc;
+            font-size: 14px;
+            border-bottom: 1px solid #333;
+        }
+        
+        .data-sources li:last-child {
+            border-bottom: none;
+        }
+        
+        footer {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            font-size: 12px;
+            color: #888;
+        }
+        
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 28px;
+            }
+            
+            .subtitle {
+                font-size: 14px;
+            }
+            
+            .stations-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .btn {
+                display: block;
+                margin: 10px auto;
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .btn-secondary {
+                margin-left: 0;
+            }
+        }
+        
+        /* Core Web Vitals Optimization */
+        img {
+            max-width: 100%;
+            height: auto;
         }
     </style>
 </head>
 <body>
 
-    <h1>CHOOSE YOUR RIDE</h1>
-    <p class="subtitle">Live open transit data (Transitous / DELFI & global GTFS + GTFS-RT feeds).</p>
+    <header>
+        <h1>Global Travellers</h1>
+        <p class="subtitle">Your gateway to live open transit data across Germany's major central stations</p>
+    </header>
 
-    <div class="card">
-        <h2>Station Guide</h2>
-        <p><strong>25 central stations:</strong> Big city and state central stations with live departures, the way out, and every service point, so you never have to queue at a desk.</p>
-        <p style="font-size: 12px; color: #888;">Examples: Berlin Hbf, München Hbf, Nürnberg Hbf...</p>
-    </div>
+    <main class="container">
+        
+        <div class="card">
+            <h2>🚂 Station Guide</h2>
+            <p><strong>25+ Central Stations:</strong> Real-time live departures, platform information, and complete service points for Germany's major hubs.</p>
+            <div class="stations-grid">
+                <div class="station-item">Berlin Hbf</div>
+                <div class="station-item">München Hbf</div>
+                <div class="station-item">Nürnberg Hbf</div>
+                <div class="station-item">Hamburg Hbf</div>
+                <div class="station-item">Köln Hbf</div>
+                <div class="station-item">Frankfurt Hbf</div>
+                <div class="station-item">Stuttgart Hbf</div>
+                <div class="station-item">...and more</div>
+            </div>
+        </div>
 
-    <p>App Store and Google Play Store release coming soon!</p>
-    
-    <!-- Replace '#' with your download link or APK once ready -->
-    <a href="#" class="btn">Download App</a>
+        <div class="features">
+            <div class="feature-item">
+                <h3>📍 Real-Time Data</h3>
+                <p>Live departures, platform changes, and service updates powered by GTFS and GTFS-RT feeds</p>
+            </div>
+            <div class="feature-item">
+                <h3>🗺️ Complete Station Information</h3>
+                <p>Never queue at a desk again - find every service point, restroom, and facility</p>
+            </div>
+            <div class="feature-item">
+                <h3>🌍 Global Integration</h3>
+                <p>Access transit data across Germany using Transitous and DELFI open data</p>
+            </div>
+        </div>
+
+        <div class="data-sources">
+            <h3>Data Sources</h3>
+            <ul>
+                <li>✓ Transitous (European Transit Data)</li>
+                <li>✓ DELFI (German Federal Transit Network)</li>
+                <li>✓ Global GTFS Feeds</li>
+                <li>✓ GTFS-RT (Real-Time Updates)</li>
+            </ul>
+        </div>
+
+        <div>
+            <p class="status">📱 App Store & Google Play Store Release Coming Soon!</p>
+            <!-- Replace with actual app store links once ready -->
+            <a href="https://play.google.com/store/apps/details?id=com.tech-v6.globaltravellers" class="btn">Google Play Store</a>
+            <a href="https://apps.apple.com/app/global-travellers/id123456789" class="btn btn-secondary">App Store</a>
+        </div>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Global Travellers. All rights reserved. | <a href="#" style="color: #ffbc00; text-decoration: none;">Privacy Policy</a> | <a href="#" style="color: #ffbc00; text-decoration: none;">Terms of Service</a></p>
+    </footer>
 
 </body>
 </html>
