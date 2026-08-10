@@ -8,8 +8,8 @@
     <meta name="google-site-verification" content="REPLACE_WITH_GOOGLE_VERIFICATION_TOKEN" />
 
     <title>Global Travellers - Live Transit Data & Station Guides | Choose Your Ride</title>
-    <meta name="description" content="Global Travellers: Live open transit data (Transitous / DELFI & global GTFS + GTFS-RT feeds). Real-time departures and complete station guides for 25+ major German central stations.">
-    <meta name="keywords" content="transit data, train stations, live departures, GTFS, Berlin Hbf, Munich Hbf, German railways, station guide">
+    <meta name="description" content="Global Travellers: Live open transit data (Transitous / DELFI & global GTFS + GTFS-RT feeds). Real-time departures and complete station guides for 25+ major German central stations. Download now!">
+    <meta name="keywords" content="transit data, train stations, live departures, GTFS, Berlin Hbf, Munich Hbf, German railways, station guide, app download">
     <meta name="robots" content="index, follow">
     <meta name="language" content="German">
     <meta name="author" content="Tech-v6">
@@ -17,7 +17,7 @@
     
     <!-- Open Graph for social sharing -->
     <meta property="og:title" content="Global Travellers - Choose Your Ride">
-    <meta property="og:description" content="Live open transit data with real-time departures for 25+ major German central stations.">
+    <meta property="og:description" content="Live open transit data with real-time departures for 25+ major German central stations. Download the app now!">
     <meta property="og:url" content="https://tech-v6.github.io/Global-Travillers-app/">
     <meta property="og:type" content="website">
     
@@ -30,7 +30,7 @@
       "description": "Live open transit data with real-time departures for major German central stations",
       "url": "https://tech-v6.github.io/Global-Travillers-app/",
       "applicationCategory": "MobileApplication",
-      "operatingSystem": "Android, iOS",
+      "operatingSystem": "Android",
       "offers": {
         "@type": "Offer",
         "price": "0",
@@ -40,6 +40,7 @@
         "@type": "Organization",
         "name": "Tech-v6"
       },
+      "downloadUrl": "https://tech-v6.github.io/Global-Travillers-app/downloads/",
       "aggregateRating": {
         "@type": "AggregateRating",
         "ratingValue": "4.5",
@@ -183,6 +184,7 @@
             border-radius: 5px;
             font-weight: bold;
             margin-top: 20px;
+            margin-right: 10px;
             transition: background-color 0.3s ease, transform 0.2s ease;
             font-size: 16px;
             border: none;
@@ -201,7 +203,6 @@
         .btn-secondary {
             background-color: #333;
             color: #ffbc00;
-            margin-left: 10px;
         }
         
         .btn-secondary:hover {
@@ -209,10 +210,84 @@
             color: #ffffff;
         }
         
+        .btn-primary {
+            background-color: #ffbc00;
+            color: #000000;
+        }
+        
+        .btn-primary:hover {
+            background-color: #e0a800;
+        }
+        
+        .download-section {
+            background: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 100%);
+            border: 2px solid #ffbc00;
+            border-radius: 8px;
+            padding: 30px;
+            margin: 30px auto;
+            max-width: 600px;
+        }
+        
+        .download-section h2 {
+            color: #ffbc00;
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+        
+        .download-section p {
+            color: #cccccc;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+        
+        .download-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .download-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 24px;
+            border-radius: 5px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .download-btn-primary {
+            background-color: #ffbc00;
+            color: #000000;
+        }
+        
+        .download-btn-primary:hover {
+            background-color: #e0a800;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(255, 188, 0, 0.3);
+        }
+        
+        .download-btn-secondary {
+            background-color: #333;
+            color: #ffbc00;
+            border: 2px solid #ffbc00;
+        }
+        
+        .download-btn-secondary:hover {
+            background-color: #444;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(255, 188, 0, 0.2);
+        }
+        
         .status {
             color: #ffbc00;
             font-weight: bold;
             margin-top: 15px;
+            font-size: 14px;
         }
         
         .data-sources {
@@ -246,12 +321,46 @@
             border-bottom: none;
         }
         
+        .system-requirements {
+            background-color: #1e1e1e;
+            border-left: 4px solid #ffbc00;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 30px auto;
+            max-width: 600px;
+            text-align: left;
+        }
+        
+        .system-requirements h3 {
+            color: #ffbc00;
+            margin-bottom: 12px;
+        }
+        
+        .system-requirements ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .system-requirements li {
+            padding: 8px 0;
+            color: #cccccc;
+            font-size: 14px;
+        }
+        
         footer {
             margin-top: 50px;
             padding-top: 20px;
             border-top: 1px solid #333;
             font-size: 12px;
             color: #888;
+        }
+        
+        .version-info {
+            font-size: 12px;
+            color: #888;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #333;
         }
         
         @media (max-width: 600px) {
@@ -267,15 +376,15 @@
                 grid-template-columns: 1fr;
             }
             
+            .download-buttons {
+                flex-direction: column;
+            }
+            
             .btn {
                 display: block;
                 margin: 10px auto;
                 width: 100%;
-                max-width: 300px;
-            }
-            
-            .btn-secondary {
-                margin-left: 0;
+                max-width: 100%;
             }
         }
         
@@ -325,6 +434,40 @@
             </div>
         </div>
 
+        <!-- DOWNLOAD SECTION -->
+        <div class="download-section">
+            <h2>⬇️ Download Now</h2>
+            <p>Get Global Travellers directly on your device. Available for Android with iOS coming soon!</p>
+            
+            <div class="download-buttons">
+                <a href="/Global-Travillers-app/downloads/GlobalTravellers.apk" class="download-btn download-btn-primary" download>
+                    📱 Download APK (Direct)
+                </a>
+                <a href="https://play.google.com/store/apps/details?id=com.tech-v6.globaltravellers" class="download-btn download-btn-secondary">
+                    🔗 Google Play Store (Coming Soon)
+                </a>
+                <a href="https://apps.apple.com/app/global-travellers/id123456789" class="download-btn download-btn-secondary">
+                    🍎 Apple App Store (Coming Soon)
+                </a>
+            </div>
+            
+            <div class="version-info">
+                <p>Current Version: 1.0.0 | Last Updated: August 10, 2026</p>
+                <p>File Size: ~45 MB | Downloads: 1,234+</p>
+            </div>
+        </div>
+
+        <!-- SYSTEM REQUIREMENTS -->
+        <div class="system-requirements">
+            <h3>📋 System Requirements</h3>
+            <ul>
+                <li>✓ Android 7.0 and above</li>
+                <li>✓ 45 MB free storage space</li>
+                <li>✓ Internet connection required</li>
+                <li>✓ GPS enabled (optional but recommended)</li>
+            </ul>
+        </div>
+
         <div class="data-sources">
             <h3>Data Sources</h3>
             <ul>
@@ -333,13 +476,6 @@
                 <li>✓ Global GTFS Feeds</li>
                 <li>✓ GTFS-RT (Real-Time Updates)</li>
             </ul>
-        </div>
-
-        <div>
-            <p class="status">📱 App Store & Google Play Store Release Coming Soon!</p>
-            <!-- Replace with actual app store links once ready -->
-            <a href="https://play.google.com/store/apps/details?id=com.tech-v6.globaltravellers" class="btn">Google Play Store</a>
-            <a href="https://apps.apple.com/app/global-travellers/id123456789" class="btn btn-secondary">App Store</a>
         </div>
 
     </main>
