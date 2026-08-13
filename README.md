@@ -126,6 +126,19 @@ open index.html
 
 The site is automatically deployed via GitHub Pages. Any changes to the `main` branch will be live within minutes.
 
+### Android AAB Build Workflow
+
+This repository now includes a GitHub Actions workflow at `.github/workflows/build-signed-aab.yml` for generating a signed release AAB that you can upload directly to Google Play Console.
+
+Before running it, add these GitHub repository secrets:
+
+- `ANDROID_KEYSTORE_BASE64`
+- `ANDROID_KEYSTORE_PASSWORD`
+- `ANDROID_KEY_ALIAS`
+- `ANDROID_KEY_PASSWORD`
+
+After the workflow finishes, download the `signed-release-aab` artifact from the workflow run summary or artifacts list.
+
 ## Configuration
 
 ### Update Google Search Console Token
