@@ -93,8 +93,8 @@ jobs:
           ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
         shell: bash
         run: |
-          STORE_PASSWORD_PROPERTY="android.injected.signing.store.pass""word"
-          KEY_PASSWORD_PROPERTY="android.injected.signing.key.pass""word"
+          STORE_PASSWORD_PROPERTY="android.injected.signing.store.password"
+          KEY_PASSWORD_PROPERTY="android.injected.signing.key.password"
 
           ./gradlew bundleRelease \
             -Pandroid.injected.signing.store.file="$KEYSTORE_PATH" \
@@ -113,7 +113,7 @@ jobs:
             exit 1
           fi
 
-          echo "path=$AAB_PATH" >> "$GITHUB_OUTPUT"
+          echo "path=$(realpath "$AAB_PATH")" >> "$GITHUB_OUTPUT"
           echo "filename=$(basename "$AAB_PATH")" >> "$GITHUB_OUTPUT"
 
       - name: Upload signed AAB
@@ -121,7 +121,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: signed-release-aab
-          path: ${{ steps.gradle.outputs.workdir }}/${{ steps.aab.outputs.path }}
+          path: ${{ steps.aab.outputs.path }}
           if-no-files-found: error
           retention-days: 30
 
