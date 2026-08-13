@@ -13,6 +13,9 @@ on:
       - '**/*.gradle'
       - '**/*.gradle.kts'
 
+permissions:
+  contents: read
+
 jobs:
   build-aab:
     runs-on: ubuntu-latest
