@@ -1,4 +1,4 @@
-name: Build signed Android AAB
+name: Build Android AAB for Google Play
 
 on:
   push:
@@ -54,53 +54,10 @@ jobs:
             exit 1
           fi
 
-      - name: Validate signing secrets
-        env:
-          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
-          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
-          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
-          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
-        shell: bash
-        run: |
-          for secret_name in \
-            ANDROID_KEYSTORE_BASE64 \
-            ANDROID_KEYSTORE_PASSWORD \
-            ANDROID_KEY_ALIAS \
-            ANDROID_KEY_PASSWORD
-          do
-            if [ -z "${!secret_name}" ]; then
-              echo "::error::Missing required GitHub secret: ${secret_name}"
-              exit 1
-            fi
-          done
-
-      - name: Decode Android signing keystore
-        id: keystore
+      - name: Build release AAB
         working-directory: ${{ steps.gradle.outputs.workdir }}
-        env:
-          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
         shell: bash
-        run: |
-          echo "$ANDROID_KEYSTORE_BASE64" | base64 --decode > "$RUNNER_TEMP/release-keystore.jks"
-          echo "path=$RUNNER_TEMP/release-keystore.jks" >> "$GITHUB_OUTPUT"
-
-      - name: Build signed release AAB
-        working-directory: ${{ steps.gradle.outputs.workdir }}
-        env:
-          KEYSTORE_PATH: ${{ steps.keystore.outputs.path }}
-          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
-          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
-          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
-        shell: bash
-        run: |
-          STORE_PASSWORD_PROPERTY="android.injected.signing.store.password"
-          KEY_PASSWORD_PROPERTY="android.injected.signing.key.password"
-
-          ./gradlew bundleRelease \
-            -Pandroid.injected.signing.store.file="$KEYSTORE_PATH" \
-            -P"${STORE_PASSWORD_PROPERTY}=${ANDROID_KEYSTORE_PASSWORD}" \
-            -Pandroid.injected.signing.key.alias="$ANDROID_KEY_ALIAS" \
-            -P"${KEY_PASSWORD_PROPERTY}=${ANDROID_KEY_PASSWORD}"
+        run: ./gradlew bundleRelease
 
       - name: Locate generated AAB
         id: aab
@@ -116,11 +73,11 @@ jobs:
           echo "path=$(realpath "$AAB_PATH")" >> "$GITHUB_OUTPUT"
           echo "filename=$(basename "$AAB_PATH")" >> "$GITHUB_OUTPUT"
 
-      - name: Upload signed AAB
+      - name: Upload release AAB
         id: upload
         uses: actions/upload-artifact@v4
         with:
-          name: signed-release-aab
+          name: release-aab
           path: ${{ steps.aab.outputs.path }}
           if-no-files-found: error
           retention-days: 30
@@ -132,9 +89,10 @@ jobs:
         shell: bash
         run: |
           {
-            echo "## Signed Android App Bundle ready"
+            echo "## Android App Bundle ready for Google Play Console"
             echo
             echo "- File: \`$AAB_FILE\`"
             echo "- Download: $ARTIFACT_URL"
             echo "- Next step: upload this AAB in Google Play Console."
+            echo "- Note: No Android keystore GitHub secrets are required. Google Play App Signing handles production release signing."
           } >> "$GITHUB_STEP_SUMMARY"
