@@ -1,0 +1,44 @@
+name: Build signed Android AAB for Play Store
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - android/**
+      - '**/build.gradle'
+      - '**/build.gradle.kts'
+      - '**/gradle.properties'
+      - '**/*.gradle'
+      - '**/*.gradle.kts'
+
+jobs:
+  build-aab:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Build release AAB
+        working-directory: android
+        run: |
+          chmod +x ./gradlew
+          ./gradlew bundleRelease
+
+      - name: Upload AAB artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: signed-release-aab
+          path: android/app/build/outputs/bundle/release/*.aab
+          if-no-files-found: error
