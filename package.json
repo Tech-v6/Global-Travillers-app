@@ -1,0 +1,34 @@
+{
+  "name": "global-travillers-app",
+  "version": "1.0.0",
+  "description": "Cross-platform Global Travellers web, Android, and iOS project scaffold",
+  "private": true,
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "prepare:web": "rm -rf www && mkdir -p www && cp index.html Index.html downloads.html download-manager.html qr-code.html robots.txt sitemap.xml googlea62ad32266fb07b9.html www/ && cp -R docs downloads www/",
+    "sync": "npm run prepare:web && npx cap sync",
+    "sync:android": "npm run prepare:web && npx cap sync android",
+    "sync:ios": "npm run prepare:web && npx cap sync ios",
+    "open:android": "npx cap open android",
+    "open:ios": "npx cap open ios",
+    "verify:android": "node -e \"const fs=require('fs'); const files=['android/gradlew','android/settings.gradle','android/app/build.gradle','android/app/src/main/AndroidManifest.xml','android/app/src/main/assets/public/index.html']; const missing=files.filter((file)=>!fs.existsSync(file)); if(missing.length){console.error('Missing Android files:', missing.join(', ')); process.exit(1);} console.log('Android scaffold verified.');\"",
+    "verify:ios": "node -e \"const fs=require('fs'); const files=['ios/App/App.xcodeproj/project.pbxproj','ios/App/App/Info.plist','ios/App/CapApp-SPM/Package.swift','ios/App/App/public/index.html']; const missing=files.filter((file)=>!fs.existsSync(file)); if(missing.length){console.error('Missing iOS files:', missing.join(', ')); process.exit(1);} console.log('iOS scaffold verified.');\"",
+    "verify:web": "node -e \"const fs=require('fs'); const source=fs.readFileSync('index.html','utf8'); const mirrored=fs.readFileSync('www/index.html','utf8'); if(source!==mirrored){console.error('www/index.html is out of sync with root index.html'); process.exit(1);} console.log('Web bundle verified.');\"",
+    "test": "npm run verify:android && npm run verify:ios && npm run verify:web"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://localhost:26831/Tech-v6/Global-Travillers-app"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@capacitor/android": "8.4.2",
+    "@capacitor/cli": "8.4.2",
+    "@capacitor/core": "8.4.2",
+    "@capacitor/ios": "8.4.2"
+  }
+}

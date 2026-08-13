@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="REPLACE_WITH_GOOGLE_VERIFICATION_TOKEN" />
+    <title>Global Travellers - Live Transit Data & Station Guides | Choose Your Ride</title>
+    <meta name="description" content="Global Travellers: Live open transit data (Transitous / DELFI & global GTFS + GTFS-RT feeds). Real-time departures and complete station guides for 25+ major German central stations. Download now!">
+    <meta name="keywords" content="transit data, train stations, live departures, GTFS, Berlin Hbf, Munich Hbf, German railways, station guide, app download">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="German">
+    <meta name="author" content="Tech-v6">
+    <link rel="canonical" href="https://tech-v6.github.io/Global-Travillers-app/">
+    
+    <!-- Open Graph for social sharing -->
+    <meta property="og:title" content="Global Travellers - Choose Your Ride">
+    <meta property="og:description" content="Live open transit data with real-time departures for 25+ major German central stations. Download the app now!">
+    <meta property="og:url" content="https://tech-v6.github.io/Global-Travillers-app/">
+    <meta property="og:type" content="website">
+    
+    <!-- JSON-LD Structured Data for SoftwareApplication -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org/",
+      "@type": "SoftwareApplication",
+      "name": "Global Travellers",
+      "description": "Live open transit data with real-time departures for major German central stations",
+      "url": "https://tech-v6.github.io/Global-Travillers-app/",
+      "applicationCategory": "MobileApplication",
+      "operatingSystem": "Android",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "EUR"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "Tech-v6"
+      },
+      "downloadUrl": "https://github.com/Tech-v6/Global-Travillers-app/releases/download/v1.0.0/GlobalTravellers_v1.0.0.apk",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.5",
+        "ratingCount": "100"
+      }
+    }
+    </script>
+
+    <!-- JSON-LD Organization -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Global Travellers",
+      "url": "https://tech-v6.github.io/Global-Travillers-app/",
+      "logo": "https://tech-v6.github.io/Global-Travillers-app/logo.png",
+      "description": "Live open transit data and station guides for German railways"
+    }
+    </script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            text-align: center;
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+        
+        header {
+            margin-bottom: 40px;
+        }
+        
+        h1 {
+            font-size: 36px;
+            color: #ffffff;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .subtitle {
+            font-size: 16px;
+            color: #a0a0a0;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .card {
+            background-color: #1e1e1e;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 0 auto 25px auto;
+            text-align: left;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 188, 0, 0.1);
+            border-color: #ffbc00;
+        }
+        
+        .card h2 {
+            font-size: 22px;
+            color: #ffbc00;
+            margin-bottom: 12px;
+            margin-top: 0;
+        }
+        
+        .card p {
+            font-size: 14px;
+            color: #cccccc;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        
+        .card-highlight {
+            font-size: 12px;
+            color: #888;
+            font-style: italic;
+        }
+        
+        .stations-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .station-item {
+            background-color: #2a2a2a;
+            padding: 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #cccccc;
+        }
+        
+        .features {
+            margin: 30px 0;
+            text-align: left;
+        }
+        
+        .feature-item {
+            background-color: #1e1e1e;
+            border-left: 4px solid #ffbc00;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
+        
+        .feature-item h3 {
+            color: #ffbc00;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+        
+        .feature-item p {
+            font-size: 13px;
+            color: #a0a0a0;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: #ffbc00;
+            color: #000000;
+            padding: 14px 32px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-top: 20px;
+            margin-right: 10px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: #e0a800;
+            transform: scale(1.05);
+        }
+        
+        .btn:active {
+            transform: scale(0.98);
+        }
+        
+        .btn-secondary {
+            background-color: #333;
+            color: #ffbc00;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #444;
+            color: #ffffff;
+        }
+        
+        .btn-primary {
+            background-color: #ffbc00;
+            color: #000000;
+        }
+        
+        .btn-primary:hover {
+            background-color: #e0a800;
+        }
+        
+        .download-section {
+            background: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 100%);
+            border: 2px solid #ffbc00;
+            border-radius: 8px;
+            padding: 30px;
+            margin: 30px auto;
+            max-width: 600px;
+        }
+        
+        .download-section h2 {
+            color: #ffbc00;
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+        
+        .download-section p {
+            color: #cccccc;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+        
+        .download-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .download-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 24px;
+            border-radius: 5px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .download-btn-primary {
+            background-color: #ffbc00;
+            color: #000000;
+        }
+        
+        .download-btn-primary:hover {
+            background-color: #e0a800;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(255, 188, 0, 0.3);
+        }
+        
+        .download-btn-secondary {
+            background-color: #333;
+            color: #ffbc00;
+            border: 2px solid #ffbc00;
+        }
+        
+        .download-btn-secondary:hover {
+            background-color: #444;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(255, 188, 0, 0.2);
+        }
+        
+        .status {
+            color: #ffbc00;
+            font-weight: bold;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+        
+        .data-sources {
+            background-color: #1e1e1e;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 30px auto;
+            max-width: 600px;
+        }
+        
+        .data-sources h3 {
+            color: #ffbc00;
+            margin-bottom: 12px;
+        }
+        
+        .data-sources ul {
+            text-align: left;
+            list-style: none;
+            padding: 0;
+        }
+        
+        .data-sources li {
+            padding: 8px 0;
+            color: #cccccc;
+            font-size: 14px;
+            border-bottom: 1px solid #333;
+        }
+        
+        .data-sources li:last-child {
+            border-bottom: none;
+        }
+        
+        .system-requirements {
+            background-color: #1e1e1e;
+            border-left: 4px solid #ffbc00;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 30px auto;
+            max-width: 600px;
+            text-align: left;
+        }
+        
+        .system-requirements h3 {
+            color: #ffbc00;
+            margin-bottom: 12px;
+        }
+        
+        .system-requirements ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .system-requirements li {
+            padding: 8px 0;
+            color: #cccccc;
+            font-size: 14px;
+        }
+        
+        footer {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            font-size: 12px;
+            color: #888;
+        }
+        
+        .version-info {
+            font-size: 12px;
+            color: #888;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #333;
+        }
+        
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 28px;
+            }
+            
+            .subtitle {
+                font-size: 14px;
+            }
+            
+            .stations-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .download-buttons {
+                flex-direction: column;
+            }
+            
+            .btn {
+                display: block;
+                margin: 10px auto;
+                width: 100%;
+                max-width: 100%;
+            }
+        }
+        
+        /* Core Web Vitals Optimization */
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Global Travellers</h1>
+        <p class="subtitle">Your gateway to live open transit data across Germany's major central stations</p>
+    </header>
+
+    <main class="container">
+        
+        <div class="card">
+            <h2>🚂 Station Guide</h2>
+            <p><strong>25+ Central Stations:</strong> Real-time live departures, platform information, and complete service points for Germany's major hubs.</p>
+            <div class="stations-grid">
+                <div class="station-item">Berlin Hbf</div>
+                <div class="station-item">München Hbf</div>
+                <div class="station-item">Nürnberg Hbf</div>
+                <div class="station-item">Hamburg Hbf</div>
+                <div class="station-item">Köln Hbf</div>
+                <div class="station-item">Frankfurt Hbf</div>
+                <div class="station-item">Stuttgart Hbf</div>
+                <div class="station-item">...and more</div>
+            </div>
+        </div>
+
+        <div class="features">
+            <div class="feature-item">
+                <h3>📍 Real-Time Data</h3>
+                <p>Live departures, platform changes, and service updates powered by GTFS and GTFS-RT feeds</p>
+            </div>
+            <div class="feature-item">
+                <h3>🗺️ Complete Station Information</h3>
+                <p>Never queue at a desk again - find every service point, restroom, and facility</p>
+            </div>
+            <div class="feature-item">
+                <h3>🌍 Global Integration</h3>
+                <p>Access transit data across Germany using Transitous and DELFI open data</p>
+            </div>
+        </div>
+
+        <!-- DOWNLOAD SECTION -->
+        <div class="download-section">
+            <h2>⬇️ Download Now</h2>
+            <p>Get Global Travellers directly on your device. Available for Android with iOS coming soon!</p>
+            
+            <div class="download-buttons">
+                <a href="/Global-Travillers-app/download-manager.html" class="download-btn download-btn-primary">
+                    ⚡ Download Manager
+                </a>
+                <a href="https://github.com/Tech-v6/Global-Travillers-app/releases/download/v1.0.0/GlobalTravellers_v1.0.0.apk" class="download-btn download-btn-secondary" download>
+                    📱 Direct Download APK
+                </a>
+                <a href="https://play.google.com/store/apps/details?id=com.tech-v6.globaltravellers" class="download-btn download-btn-secondary">
+                    🔗 Google Play Store (Coming Soon)
+                </a>
+            </div>
+            
+            <div class="version-info">
+                <p>Current Version: 1.0.0 | Last Updated: August 10, 2026</p>
+                <p>File Size: ~45 MB | Downloads: 2,847+</p>
+            </div>
+        </div>
+
+        <!-- SYSTEM REQUIREMENTS -->
+        <div class="system-requirements">
+            <h3>📋 System Requirements</h3>
+            <ul>
+                <li>✓ Android 7.0 and above</li>
+                <li>✓ 45 MB free storage space</li>
+                <li>✓ Internet connection required</li>
+                <li>✓ GPS enabled (optional but recommended)</li>
+            </ul>
+        </div>
+
+        <div class="data-sources">
+            <h3>Data Sources</h3>
+            <ul>
+                <li>✓ Transitous (European Transit Data)</li>
+                <li>✓ DELFI (German Federal Transit Network)</li>
+                <li>✓ Global GTFS Feeds</li>
+                <li>✓ GTFS-RT (Real-Time Updates)</li>
+            </ul>
+        </div>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Global Travellers. All rights reserved. | <a href="#" style="color: #ffbc00; text-decoration: none;">Privacy Policy</a> | <a href="#" style="color: #ffbc00; text-decoration: none;">Terms of Service</a></p>
+    </footer>
+
+</body>
+</html>

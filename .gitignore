@@ -1,0 +1,7 @@
+node_modules/
+android/.gradle/
+android/build/
+android/app/build/
+ios/App/build/
+ios/App/DerivedData/
+.DS_Store

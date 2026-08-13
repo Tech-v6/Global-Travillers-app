@@ -59,19 +59,22 @@ We leverage multiple open data sources to provide accurate, up-to-date transit i
 This project is built with:
 - **HTML5** - Semantic markup
 - **CSS3** - Modern styling and responsive design
-- **JavaScript** - Dynamic functionality (coming soon)
+- **Capacitor** - Native Android and iOS wrappers
 - **GitHub Pages** - Hosting and CI/CD
 
 ### Project Structure
 
 ```
 Global-Travillers-app/
-├── index.html          # Main landing page
-├── sitemap.xml         # SEO sitemap
-├── robots.txt          # Search engine crawling rules
-├── _config.yml         # GitHub Pages configuration
-├── README.md           # This file
-└── /assets/            # Images, fonts, and other assets
+├── index.html          # Main web landing page served by GitHub Pages
+├── docs/               # Additional web pages
+├── downloads/          # Download documentation
+├── www/                # Native web bundle mirrored into Android and iOS
+├── android/            # Native Android Gradle project
+├── ios/                # Native iOS Xcode project (SwiftPM)
+├── capacitor.config.json
+├── package.json        # Capacitor sync commands
+└── _config.yml         # GitHub Pages configuration
 ```
 
 ## SEO & Discoverability
@@ -118,13 +121,47 @@ git clone https://github.com/Tech-v6/Global-Travillers-app.git
 # Navigate to the directory
 cd Global-Travillers-app
 
-# Open in your browser
+# Install native tooling dependencies
+npm install
+
+# Open the web version in your browser
 open index.html
+
+# Refresh the native web bundle and sync native projects
+npm run sync
 ```
 
 ### For GitHub Pages
 
 The site is automatically deployed via GitHub Pages. Any changes to the `main` branch will be live within minutes.
+
+### Android & iOS Projects
+
+The repository now includes Capacitor-based native projects:
+
+- `android/` contains the Android app, Gradle wrapper, manifest, and release build configuration.
+- `ios/` contains the Xcode project and a Swift Package Manager setup for Capacitor dependencies.
+- `www/` is the native web bundle used by both mobile platforms and should be refreshed with `npm run sync` whenever the root web files change.
+
+Open the native projects locally with:
+
+```bash
+npm run open:android
+npm run open:ios
+```
+
+### Android AAB Build Workflow
+
+This repository now includes a GitHub Actions workflow at `.github/workflows/build-signed-aab.yml` for generating a signed release AAB that you can upload directly to Google Play Console.
+
+Before running it, add these GitHub repository secrets:
+
+- `ANDROID_KEYSTORE_BASE64`
+- `ANDROID_KEYSTORE_PASSWORD`
+- `ANDROID_KEY_ALIAS`
+- `ANDROID_KEY_PASSWORD`
+
+After the workflow finishes, download the `signed-release-aab` artifact from the workflow run summary or artifacts list.
 
 ## Configuration
 
