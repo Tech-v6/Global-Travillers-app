@@ -1,4 +1,4 @@
-package com.getcapacitor.myapp;
+package com.techv6.globaltravellers;
 
 import static org.junit.Assert.*;
 
