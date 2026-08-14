@@ -3,7 +3,7 @@ const DEFAULT_DURATION_MINUTES = 30;
 const DEFAULT_TIMEOUT_MS = 8000;
 const DEFAULT_RETRIES = 1;
 const RETRY_BACKOFF_MS = 350;
-const UNKNOWN_LINE_NAME = "Transit";
+const UNKNOWN_LINE_NAME = "Unknown";
 
 const timeFormatter = new Intl.DateTimeFormat("de-DE", {
   timeZone: "Europe/Berlin",
@@ -64,6 +64,14 @@ function readProperty(source: object, key: string): unknown {
   return Reflect.get(source, key);
 }
 
+function pruneExpiredCacheEntries(now: number): void {
+  for (const [key, entry] of departureCache.entries()) {
+    if (entry.expiresAt <= now) {
+      departureCache.delete(key);
+    }
+  }
+}
+
 function toErrorState(input: {
   code: LiveDeparturesErrorState["code"];
   message: string;
@@ -93,7 +101,7 @@ function parseIsoTime(raw: unknown): Date | null {
   return Number.isNaN(parsed.getTime()) ? null : parsed;
 }
 
-function normaliseDeparture(stationId: string, rawItem: unknown): FormattedDeparture | null {
+function normalizeDeparture(stationId: string, rawItem: unknown): FormattedDeparture | null {
   const item = asObject(rawItem);
   if (!item) {
     return null;
@@ -131,7 +139,7 @@ function normaliseDeparture(stationId: string, rawItem: unknown): FormattedDepar
     direction,
     time: timeFormatter.format(referenceTime),
     delayMinutes,
-    isOnTime: !isCancelled && (delayMinutes === null || delayMinutes <= 0),
+    isOnTime: !isCancelled && delayMinutes !== null && delayMinutes <= 0,
     isCancelled,
     status,
     rawIsoTime: referenceTime.toISOString(),
@@ -182,13 +190,9 @@ async function fetchStationDepartures(
 
       const data: unknown = await response.json();
       const directDepartures = Array.isArray(data) ? data : null;
-      const nestedDepartures = !directDepartures
-        ? (() => {
-            const dataObject = asObject(data);
-            const departuresValue = dataObject ? readProperty(dataObject, "departures") : undefined;
-            return Array.isArray(departuresValue) ? departuresValue : null;
-          })()
-        : null;
+      const dataObject = directDepartures ? null : asObject(data);
+      const departuresValue = dataObject ? readProperty(dataObject, "departures") : undefined;
+      const nestedDepartures = Array.isArray(departuresValue) ? departuresValue : null;
       const departures = directDepartures ?? nestedDepartures;
 
       if (!departures) {
@@ -207,7 +211,8 @@ async function fetchStationDepartures(
         throw error;
       }
 
-      const isAbortError = error instanceof DOMException && error.name === "AbortError";
+      const isAbortError = (error instanceof DOMException && error.name === "AbortError")
+        || (error instanceof Error && error.name === "AbortError");
       latestError = toErrorState({
         code: isAbortError ? "TIMEOUT" : "NETWORK",
         message: isAbortError
@@ -229,13 +234,13 @@ async function fetchStationDepartures(
     }
   }
 
-  const fallbackError = latestError ??
-    toErrorState({
+  throw Object.assign(new Error("Unexpected departure fetch loop exit"), {
+    details: latestError ?? toErrorState({
       code: "NETWORK",
       message: "Unknown error while requesting departures",
       stationId,
-    });
-  throw Object.assign(new Error(fallbackError.message), { details: fallbackError });
+    }),
+  });
 }
 
 /**
@@ -255,15 +260,15 @@ export async function getLiveDepartures(
   }
 
   const mergedOptions = {
-    durationMinutes: options.durationMinutes ?? DEFAULT_DURATION_MINUTES,
-    timeoutMs: options.timeoutMs ?? DEFAULT_TIMEOUT_MS,
-    retries: options.retries ?? DEFAULT_RETRIES,
-    cacheTtlMs: options.cacheTtlMs ?? 0,
+    durationMinutes: Math.max(1, Math.floor(options.durationMinutes ?? DEFAULT_DURATION_MINUTES)),
+    timeoutMs: Math.max(1000, Math.floor(options.timeoutMs ?? DEFAULT_TIMEOUT_MS)),
+    retries: Math.max(0, Math.floor(options.retries ?? DEFAULT_RETRIES)),
+    cacheTtlMs: Math.max(0, Math.floor(options.cacheTtlMs ?? 0)),
     includeCancelled: options.includeCancelled ?? true,
     sortByTime: options.sortByTime ?? true,
   };
 
-  const cacheKey = `${stationIds.join(",")}:${mergedOptions.durationMinutes}:${mergedOptions.includeCancelled}`;
+  const cacheKey = `${stationIds.join(",")}:${mergedOptions.durationMinutes}:${mergedOptions.includeCancelled}:${mergedOptions.sortByTime}:${mergedOptions.cacheTtlMs}`;
   const now = Date.now();
   if (mergedOptions.cacheTtlMs > 0) {
     const cached = departureCache.get(cacheKey);
@@ -273,7 +278,7 @@ export async function getLiveDepartures(
   }
 
   try {
-    const stationResults = await Promise.all(
+    const stationResults = await Promise.allSettled(
       stationIds.map((id) =>
         fetchStationDepartures(id, {
           durationMinutes: mergedOptions.durationMinutes,
@@ -283,10 +288,21 @@ export async function getLiveDepartures(
       ),
     );
 
-    let formatted = stationResults.flatMap((rawDepartures, stationIndex) => {
+    let formatted = stationResults.flatMap((stationResult, stationIndex) => {
       const id = stationIds[stationIndex];
-      return rawDepartures
-        .map((item) => normaliseDeparture(id, item))
+      if (!id) {
+        return [];
+      }
+      if (stationResult.status === "rejected") {
+        console.error("getLiveDepartures failed for station", {
+          stationId: id,
+          error: stationResult.reason,
+        });
+        return [];
+      }
+
+      return stationResult.value
+        .map((item) => normalizeDeparture(id, item))
         .filter((item): item is FormattedDeparture => item !== null);
     });
 
@@ -299,6 +315,7 @@ export async function getLiveDepartures(
     }
 
     if (mergedOptions.cacheTtlMs > 0) {
+      pruneExpiredCacheEntries(now);
       departureCache.set(cacheKey, {
         expiresAt: now + mergedOptions.cacheTtlMs,
         data: formatted,
