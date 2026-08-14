@@ -1,0 +1,46 @@
+<resources>
+    <drawable name="badge_u1"> 
+        <shape android:shape="rectangle" xmlns:android="http://schemas.android.com/apk/res/android">
+            <corners android:radius="16dp" />
+            <gradient
+                android:angle="0"
+                android:startColor="#2563EB"
+                android:endColor="#1D4ED8" />
+            <padding
+                android:left="8dp"
+                android:top="4dp"
+                android:right="8dp"
+                android:bottom="4dp" />
+        </shape>
+    </drawable>
+
+    <drawable name="badge_re19">
+        <shape android:shape="rectangle" xmlns:android="http://schemas.android.com/apk/res/android">
+            <corners android:radius="16dp" />
+            <gradient
+                android:angle="0"
+                android:startColor="#7C3AED"
+                android:endColor="#5B21B6" />
+            <padding
+                android:left="8dp"
+                android:top="4dp"
+                android:right="8dp"
+                android:bottom="4dp" />
+        </shape>
+    </drawable>
+
+    <drawable name="badge_112">
+        <shape android:shape="rectangle" xmlns:android="http://schemas.android.com/apk/res/android">
+            <corners android:radius="16dp" />
+            <gradient
+                android:angle="0"
+                android:startColor="#DC2626"
+                android:endColor="#B91C1C" />
+            <padding
+                android:left="8dp"
+                android:top="4dp"
+                android:right="8dp"
+                android:bottom="4dp" />
+        </shape>
+    </drawable>
+</resources>
