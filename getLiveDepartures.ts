@@ -3,6 +3,7 @@ const DEFAULT_DURATION_MINUTES = 30;
 const DEFAULT_TIMEOUT_MS = 8000;
 const DEFAULT_RETRIES = 1;
 const RETRY_BACKOFF_MS = 350;
+const UNKNOWN_LINE_NAME = "Transit";
 
 const timeFormatter = new Intl.DateTimeFormat("de-DE", {
   timeZone: "Europe/Berlin",
@@ -112,7 +113,7 @@ function normaliseDeparture(stationId: string, rawItem: unknown): FormattedDepar
 
   const lineRecord = asObject(readProperty(item, "line"));
   const lineName = lineRecord ? readProperty(lineRecord, "name") : undefined;
-  const line = typeof lineName === "string" && lineName.trim() ? lineName.trim() : "Transit";
+  const line = typeof lineName === "string" && lineName.trim() ? lineName.trim() : UNKNOWN_LINE_NAME;
   const directionValue = readProperty(item, "direction");
   const direction = typeof directionValue === "string" && directionValue.trim() ? directionValue.trim() : "Unknown";
 
@@ -180,17 +181,32 @@ async function fetchStationDepartures(
       }
 
       const data: unknown = await response.json();
-      if (!Array.isArray(data)) {
+      const directDepartures = Array.isArray(data) ? data : null;
+      const nestedDepartures = !directDepartures
+        ? (() => {
+            const dataObject = asObject(data);
+            const departuresValue = dataObject ? readProperty(dataObject, "departures") : undefined;
+            return Array.isArray(departuresValue) ? departuresValue : null;
+          })()
+        : null;
+      const departures = directDepartures ?? nestedDepartures;
+
+      if (!departures) {
         const errorState = toErrorState({
           code: "INVALID_RESPONSE",
-          message: "Departure API returned a non-array payload",
+          message: "Departure API returned an unexpected payload shape",
           stationId,
         });
         throw Object.assign(new Error(errorState.message), { details: errorState });
       }
 
-      return data;
+      return departures;
     } catch (error) {
+      const errorObject = asObject(error);
+      if (errorObject && asObject(readProperty(errorObject, "details"))) {
+        throw error;
+      }
+
       const isAbortError = error instanceof DOMException && error.name === "AbortError";
       latestError = toErrorState({
         code: isAbortError ? "TIMEOUT" : "NETWORK",
@@ -279,7 +295,7 @@ export async function getLiveDepartures(
     }
 
     if (mergedOptions.sortByTime) {
-      formatted = formatted.sort((a, b) => a.rawIsoTime.localeCompare(b.rawIsoTime));
+      formatted = formatted.sort((a, b) => Date.parse(a.rawIsoTime) - Date.parse(b.rawIsoTime));
     }
 
     if (mergedOptions.cacheTtlMs > 0) {
