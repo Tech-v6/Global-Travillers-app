@@ -27,12 +27,16 @@ Live information is labelled live only when genuinely confirmed live; timetable 
 | File | Purpose |
 | --- | --- |
 | `index.html` | Home page |
-| `downloads.html` | How to open and keep the app |
+| `downloads.html` | How to open the app and download verified public media |
 | `download-manager.html` | Access and setup help |
 | `qr-code.html` | QR code for the official app link |
 | `docs/privacy.html` | Privacy information |
 | `assets/brand.css` | OminiTrain website brand styles |
 | `assets/ominitrain-logo.png` | Official OminiTrain logo |
+
+## Public media
+
+The media section offers only files that genuinely exist in this repository. The official 512 × 512 PNG logo is downloadable at `assets/ominitrain-logo.png`. No separate promotional graphics or video files are currently stored here, so the website labels those categories unavailable rather than offering placeholder files.
 
 The `app/` directory holds an earlier Android build configuration kept for history.
 
