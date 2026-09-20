@@ -195,3 +195,5 @@ li { margin-bottom: 8px; }
 }
 .site-footer .brand { margin-bottom: 10px; }
 .site-footer nav { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 10px; }
+
+video.media-preview { aspect-ratio: auto; background: #000; }
