@@ -1,0 +1,151 @@
+/* OminiTrain App — official website brand system */
+@import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;600;700&family=JetBrains+Mono:wght@500&display=swap");
+
+:root {
+  color-scheme: dark;
+  --bg: #09090b;
+  --panel: #171719;
+  --border: #2a2a2e;
+  --text: #fafafa;
+  --muted: #a1a1aa;
+  --amber: #fbbf24;
+  --green: #34d399;
+  --max: 1080px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Barlow, system-ui, -apple-system, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+h1, h2, h3 {
+  font-family: "Barlow Condensed", Barlow, sans-serif;
+  letter-spacing: 0.01em;
+  line-height: 1.15;
+  margin: 0 0 12px;
+}
+
+h1 { font-size: clamp(30px, 7vw, 54px); }
+h2 { font-size: clamp(22px, 4.6vw, 32px); }
+h3 { font-size: 19px; }
+
+a { color: var(--amber); text-decoration: none; }
+a:hover { text-decoration: underline; }
+p { margin: 0 0 14px; }
+
+.wrap { width: 100%; max-width: var(--max); margin: 0 auto; padding: 0 20px; }
+
+/* Header */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: rgba(9, 9, 11, 0.94);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.site-header .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+}
+.brand { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.brand img { width: 38px; height: 38px; border-radius: 10px; }
+.brand-name {
+  font-family: "Barlow Condensed", sans-serif;
+  font-weight: 700;
+  font-size: 21px;
+  line-height: 1.1;
+}
+.brand-claim {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--amber);
+}
+.site-nav { display: flex; flex-wrap: wrap; gap: 8px; margin-left: auto; }
+.site-nav a {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  padding: 8px 10px;
+  border-radius: 999px;
+}
+.site-nav a:hover { color: var(--text); text-decoration: none; }
+.site-nav a.cta {
+  color: var(--bg);
+  background: var(--amber);
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 12px 22px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 15px;
+  border: 1px solid var(--amber);
+  background: var(--amber);
+  color: var(--bg);
+}
+.btn.ghost { background: transparent; color: var(--amber); }
+.btn:hover { text-decoration: none; opacity: 0.92; }
+
+/* Sections and cards */
+section { padding: 44px 0; }
+.label {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 8px;
+}
+.grid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 18px;
+}
+.card p:last-child { margin-bottom: 0; }
+.muted { color: var(--muted); }
+.note {
+  border-left: 3px solid var(--green);
+  background: var(--panel);
+  border-radius: 12px;
+  padding: 14px 16px;
+  color: var(--muted);
+}
+ol, ul { padding-left: 20px; }
+li { margin-bottom: 8px; }
+
+/* Footer */
+.site-footer {
+  border-top: 1px solid var(--border);
+  padding: 28px 0 40px;
+  color: var(--muted);
+  font-size: 14px;
+}
+.site-footer .brand { margin-bottom: 10px; }
+.site-footer nav { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 10px; }
