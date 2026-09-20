@@ -1,65 +1,31 @@
-# Privacy Policy - Travellers Companion
+# OminiTrain App — Privacy
 
-**Effective date:** 2026-08-11
+**OminiTrain App — Your Journey, Everywhere.**
+Independent global travel-tech project. Contact: cusmasobi888@gmail.com
 
-**Company:** Company..Tech
+The readable version of this policy is published at
+https://tech-v6.github.io/Global-Travillers-app/docs/privacy.html
 
-**Contact:** ofificehome@gmail.com
+## On your device
 
-## 1. Introduction
+Planned and saved journeys, language and display settings, reminders and OminiJourney Memory entries — including titles, notes and photos you add — stay on your device unless you choose to save or share them elsewhere.
 
-Company..Tech provides the Travellers Companion mobile application. This Privacy Policy explains what information we collect, how we use it, and your rights.
+## Location
 
-## 2. Information We Collect
+Location is used only when you ask OminiTrain to plan from where you are, and only after you grant permission. Addresses and places you type are not treated as your location.
 
-- **Account information:** Email address you provide when creating an account (optional)
-- **Device & usage data:** App usage metrics, crash reports, diagnostics via analytics providers
+## Notifications
 
-By default we do NOT collect: location, payment details, contacts, health, or financial data.
+Notifications are used for journey reminders. Sound and vibration depend on what your device allows for OminiTrain.
 
-## 3. How We Use Information
+## Contacts, sharing and printing
 
-- Provide and operate app features
-- Monitor, analyze, and improve app performance
-- Respond to support requests
-- Protect against abuse and enforce terms
+Sharing, email, printing and choosing a contact use your device's own features. Nothing is sent without your action, and your address book is not uploaded.
 
-## 4. Third Parties
+## Travel data
 
-We use third-party analytics and crash-reporting services (Firebase Analytics, Sentry, etc.). These providers process data only for our purposes.
+Journey and departure information comes from public transport data sources and is shown with its source and how recently it was checked. Live information is labelled live only when genuinely confirmed live.
 
-## 5. Data Retention
+## Website
 
-We retain personal data as long as needed to provide service and meet legal obligations.
-
-## 6. Your Rights (GDPR/CCPA)
-
-- **Access & portability:** Request a copy of your data
-- **Correction:** Request correction of inaccurate data
-- **Deletion:** Request deletion of your data
-- **Restriction:** Request restriction of processing
-- **Opt-out:** Opt out of analytics where available
-
-**California residents (CCPA):** We do not sell personal information. Email ofificehome@gmail.com with "Privacy Request" in subject to exercise rights.
-
-## 7. Security
-
-We use reasonable administrative, technical, and physical measures to protect personal information. No method is completely secure.
-
-## 8. Children
-
-The app is not intended for children under 13. We do not knowingly collect information from children under 13.
-
-## 9. International Transfers
-
-Your data may be processed in countries outside your jurisdiction. We take steps to ensure appropriate safeguards.
-
-## 10. Policy Changes
-
-We may update this policy. Changes will be posted here with updated effective date.
-
-## 11. Contact
-
-Company..Tech
-
-Email: ofificehome@gmail.com
+The companion website is published with GitHub Pages and has no accounts or tracking of its own. The QR code image is produced by goQR.me (api.qrserver.com) when that page loads.
